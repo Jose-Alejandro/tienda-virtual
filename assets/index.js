@@ -1,79 +1,69 @@
-function createTrendElement(item) {
-    console.log(item)
-    console.log(item.thumbnail)
-    let container = document.getElementById('product-container')
-    let row = document.createElement('div')
-    row.classList.add('row')
-    row.classList.add('featurette')
-    let divider = document.createElement('hr');
-    divider.classList.add('featurette-divider')
-    let headerDiv = document.createElement('div');
-    headerDiv.classList.add('col-md-7')
-    let itemHeader = document.createElement('h2');
-    itemHeader.classList.add('featurette-heading');
-    itemHeader.textContent = item.title;
-    // let itemPrice = document.createElement('p');
-    // itemPrice.classList.add('lead');
-    // itemPrice.textContent = item.price
-    let imageContainer = document.createElement('div');
-    imageContainer.classList.add('col-md-5');
-    itemImage = document.createElement('img');
-    itemImage.setAttribute('src', item.thumbnail);
+class Store {
+    constructor() {};
 
-    itemImage.style.width = '300px'
-    itemImage.style.height = '300px'
-    container.appendChild(divider)
-    container.appendChild(row)
-    row.appendChild(headerDiv);
-    headerDiv.appendChild(itemHeader);
-    // headerDiv.appendChild(itemPrice);
-    row.appendChild(imageContainer);
-    imageContainer.appendChild(itemImage)
-}
+    createTrendElement(product) {
+        let productContainer = document.getElementById('product-container');
+        let row = document.createElement('div');
+        row.classList.add('row');
+        row.classList.add('featurette');
+        let divider = document.createElement('hr');
+        divider.classList.add('featurette-divider');
+        let headerDiv = document.createElement('div');
+        headerDiv.classList.add('col-md-7')
+        let productHeader = document.createElement('h2');
+        productHeader.classList.add('featurette-heading');
+        productHeader.textContent = product.title;
+        // let itemPrice = document.createElement('p');
+        // itemPrice.classList.add('lead');
+        // itemPrice.textContent = item.price
+        let imageContainer = document.createElement('div');
+        imageContainer.classList.add('col-md-5');
+        let itemImage = document.createElement('img');
+        itemImage.setAttribute('src', product.thumbnail);
 
+        itemImage.style.width = '300px';
+        itemImage.style.height = '300px';
+        productContainer.appendChild(divider);
+        productContainer.appendChild(row);
+        row.appendChild(headerDiv);
+        headerDiv.appendChild(productHeader);
+        // headerDiv.appendChild(itemPrice);
+        row.appendChild(imageContainer);
+        imageContainer.appendChild(itemImage);
+    };
+    // funcion que usa la palabras claves para busquar y traer productos
+    async getProductsFromKeyword(word) {
+        const response = await fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${word}`);
+        const products = await response.json(); //promesa en espera
+        return products;
+    }
 
-var resultado;
+    //trae productos por palabra clave
+    async getTrendProducts(keyword) {
+        this.CategoryProducts = await this.getProductsFromKeyword(keyword) //palabras claves
+        for (let i = 0; i < 2; i++) { //
+            let product = this.CategoryProducts.results[i];
+            this.createTrendElement(product);
+        }
+    }
 
-// imprime solo las palabras claves sin el enlace
-/*
-function imprimePalabrasclaves(json){
-	for (var i in json) {
-		console.log(json[i].keyword)
-	}
-}*/
+    //tendecias mercado libre
+    async getTrendCategory() {
+        const resp = await fetch("https://api.mercadolibre.com/trends/MX/MLA1648"); //promesa en espera por si no finaliza devuelev vacio
+        const data = await resp.json(); //promesa en espera
+        return data;
+    }
 
-// funcion que  usa la palabras claves para busquar y traer productos
-async function getListWord(word) {
-    const resp = await fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${word}`) //promesa en espera por si no finaliza devuelev vacio
-    const data = await resp.json() //promesa en espera
-    return data
-}
+    async getTrendKeywords() {
+        this.CategoryProducts = await this.getTrendCategory(); //palabras claves
+        for (let i in this.CategoryProducts) {
+            this.getTrendProducts(this.CategoryProducts[i].keyword);
+        }
+    }
 
-//trae productos por palabra clave
-async function getProductos(word) {
-    resultado = await getListWord(word) //palabras claves
-    for (let index = 0; index < 2; index++) {
-        let element = resultado.results[index]
-        createTrendElement(element)
+    static start() {
+        let myStore = new Store();
+        myStore.getTrendKeywords();
     }
 }
-
-
-
-//funcion conecta con tendecias mercado libre
-async function getMercado() {
-    const resp = await fetch("https://api.mercadolibre.com/trends/MX/MLA1648") //promesa en espera por si no finaliza devuelev vacio
-    const data = await resp.json() //promesa en espera
-    return data
-}
-
-
-//busca productos con la palabra clave
-async function getKeywordsMerc() {
-    resultado = await getMercado() //palabras claves
-    for (let i in resultado) {
-        getProductos(resultado[i].keyword)
-    }
-}
-
-getKeywordsMerc();
+Store.start();
