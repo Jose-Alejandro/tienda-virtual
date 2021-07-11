@@ -65,7 +65,7 @@ class Store {
 
   //tendecias mercado libre
   async getTrendCategory() {
-    const resp = await fetch("https://api.mercadolibre.com/trends/MX/MLA1648"); //promesa en espera por si no finaliza devuelev vacio
+    const resp = await fetch("https://api.mercadolibre.com/trends/MLA/MLA1648"); //promesa en espera por si no finaliza devuelev vacio
     const data = await resp.json(); //promesa en espera
     return data;
   }
