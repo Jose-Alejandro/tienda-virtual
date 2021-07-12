@@ -1,0 +1,19 @@
+{
+  "name": "tienda-virtual",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./assets/modulos/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./assets/modulos/server.js",
+    "dev": "nodemon ./assets/modulos/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.12"
+  }
+}
