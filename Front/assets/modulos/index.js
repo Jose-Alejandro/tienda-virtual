@@ -5,7 +5,7 @@ const ML_ENDPOINT = 'trendProducts';
 
 /** Clase Store */
 class Store {
-    constructor (key) {
+    constructor(key) {
         this.word = key;
     }
 
@@ -54,18 +54,31 @@ class Store {
     }
     /** funcion que usa la palabras claves para buscar y traer productos */
     async getProductsFromKeyword(word) {
-        const response = await fetch(`http://127.0.0.1:3000/${ML_ENDPOINT}?q=${word}`);
-        const products = await response.json(); //promesa en espera
-        return products;
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/${ML_ENDPOINT}?q=${word}`);
+
+            const products = await response.json(); //promesa en espera
+            return products;
+        } catch (error) {
+            console.log('Hola');
+            throw new Error(error);
+        }
+
     }
 
     /** trae productos por palabra clave */
     async getTrendProducts() {
         let productContainer = document.getElementById("product-container");
         productContainer.innerHTML = '';
-        this.CategoryProducts = await this.getProductsFromKeyword(this.word); //palabras claves
-        for (let product in this.CategoryProducts.results) {
-            this.createTrendElement(this.CategoryProducts.results[product]);
+
+        try {
+            this.CategoryProducts = await this.getProductsFromKeyword(this.word); //palabras claves
+            for (let product in this.CategoryProducts.results) {
+                this.createTrendElement(this.CategoryProducts.results[product]);
+            }
+        } catch (error) {
+            console.log('Hola2');
+            throw new Error(error);
         }
     }
 
@@ -79,10 +92,21 @@ myStore.start();
 
 function setSearchValue(store) {
     let search = document.getElementById('Search');
-    getSearchProducts(store, search.value);
+
+    try {
+        getSearchProducts(store, search.value);
+    } catch (error) {
+        console.log('Hola3');
+        throw new Error(error);
+    }
 }
 
 function getSearchProducts(store, keywords) {
     store.word = keywords;
-    store.getTrendProducts();
+    try {
+        store.getTrendProducts();
+    } catch (error) {
+        console.log('Hola4');
+        throw new Error(error);
+    }
 }
