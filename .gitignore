@@ -1,6 +1,3 @@
-node_modules
-.ENV
-
 ### Linux ###
 *~
 
@@ -88,3 +85,7 @@ $RECYCLE.BIN/
 *.lnk
 
 
+# Node js
+./Back/node_modules
+./Front/node_modules
+.ENV
