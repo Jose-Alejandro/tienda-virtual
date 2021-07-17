@@ -1,29 +1,25 @@
-//importamos modulos a utilizar 
-//modulos Nodejs
-const { Console } = require('console');
-const server = require('http');
+/** Import required modules */
+
+const express = require('express');
 const fetch = require('node-fetch');
+const cors = require('cors');
 require('dotenv').config();
 
-//modulos propios
+/** Config server */
+const app = express();
 
-//crea funciion de request
-async function request (req,res){
-    //devuelev un html con imagen, la frase y un titulo que se colocara
-   // res.writeHead(200, {'content-type': 'text/html'});
-   // res.write(resultado);
-   //res.end();
-   const resp = await fetch("https://api.mercadolibre.com/trends/MLA/MLA1648"); //promesa en espera por si no finaliza devuelev vacio
-   const data = await resp.json(); //promesa en espera
- 
-    res.writeHead(200, {'Content-Type': 'application/json'}); 
-    res.write(JSON.stringify(data));
-    
-    res.end();
-}
 
-//instanciar y crear levantar nuestro server
-const servidor = server.createServer(request);
-servidor.listen(process.env.PORT, process.env.HOST,()=>{
-    console.log(`Servidor inicaido en http://${process.env.HOST}:${process.env.PORT}`);
-}); //pasamos variables de entorno
+/** Global middlewares */
+app.use(cors());
+
+/** create server */
+app.listen(process.env.PORT, process.env.HOST, () => {
+    console.log(`Server starte at ${process.env.HOST}:${process.env.PORT}`);
+});
+
+/** end points */
+app.get('/trendProducts', async (req, res) => {
+    let result = await fetch(`https://api.mercadolibre.com/sites/MLM/search?q=${req.query.q}&limit=10`);
+    let response = await result.json();
+    res.send(response);
+});

@@ -86,6 +86,6 @@ $RECYCLE.BIN/
 
 
 # Node js
-./Back/node_modules
-./Front/node_modules
-.ENV
+node_modules
+package-lock.json
+Untitled-1
