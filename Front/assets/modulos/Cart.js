@@ -1,3 +1,5 @@
+/*
+
 class Cart(user) {
     constructor() {
         let total = 0;
@@ -46,3 +48,5 @@ class Productos() {
         retrieveDB(this.id);
     };
 }
+
+*/
