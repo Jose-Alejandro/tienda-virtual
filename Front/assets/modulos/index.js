@@ -60,7 +60,6 @@ class Store {
             const products = await response.json(); //promesa en espera
             return products;
         } catch (error) {
-            console.log('Hola');
             throw new Error(error);
         }
 
@@ -77,7 +76,6 @@ class Store {
                 this.createTrendElement(this.CategoryProducts.results[product]);
             }
         } catch (error) {
-            console.log('Hola2');
             throw new Error(error);
         }
     }
@@ -96,7 +94,6 @@ function setSearchValue(store) {
     try {
         getSearchProducts(store, search.value);
     } catch (error) {
-        console.log('Hola3');
         throw new Error(error);
     }
 }
@@ -106,7 +103,6 @@ function getSearchProducts(store, keywords) {
     try {
         store.getTrendProducts();
     } catch (error) {
-        console.log('Hola4');
         throw new Error(error);
     }
 }
