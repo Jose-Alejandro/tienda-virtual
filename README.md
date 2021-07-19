@@ -19,5 +19,5 @@ Authors: Alejandro Esquivel / Guillermo Ortega
 
 # Notes
 * Make sure you start web server at http://127.0.0.1:5500 (default by Live-Server extension)
-* Back server uses CORS white-list based authorization, and http://127.0.0.1:5500 is authorized. Other front web server will be rejected.
+* Back server uses CORS white-list based authorization, and http://127.0.0.1:5500 is authorized. Other front web servers will be rejected.
 
