@@ -1,0 +1,101 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentación de la API para el servidor de backend para la tienda virtual de Tecla",
+    "version": "1.0.0",
+    "title": "Super Store",
+    "contact": {
+      "email": "jose.alejandro.esquivel@gmail.com"
+    },
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "host": "127.0.0.1:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Super Store",
+      "description": "Todo lo necesario para tu equipo de cómputo",
+      "externalDocs": {
+        "description": "",
+        "url": "https://github.com/Jose-Alejandro/tienda-virtual"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/tredProducts": {
+      "get": {
+        "tags": [
+          "get trend Products"
+        ],
+        "summary": "Obtener productos tendencia desde Mercado Libre",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Las keyword necesarias para la búsqueda en Mercado Libre",
+            "required": true,
+            "type": "string",
+            "default": "Tarjeta Grafica"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "site_id": {
+                  "type": "string",
+                  "format": "string"
+                },
+                "query": {
+                  "type": "string",
+                  "format": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "string"
+                      },
+                      "site_id": {
+                        "type": "string",
+                        "format": "string"
+                      },
+                      "title": {
+                        "type": "string",
+                        "format": "string"
+                      },
+                      "price": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "thumbnail": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    }
+  }
+}
