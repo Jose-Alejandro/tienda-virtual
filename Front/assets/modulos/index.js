@@ -1,6 +1,11 @@
 /** Constantes */
+
+
+
 const defaultSearch = 'Tarjeta grafica';
 const ML_ENDPOINT = 'trendProducts';
+
+
 
 
 /** Clase Store */
@@ -39,6 +44,8 @@ class Store {
         itemImage.style.height = "300px";
 
         let addButton = document.createElement("button");
+        addButton.setAttribute("id","addToCar");
+        addButton.setAttribute("onclick",`clickAdd('${product.id}')`);
         addButton.classList.add("btn");
         addButton.classList.add("btn-primary");
         addButton.textContent = 'Add to cart';
@@ -106,3 +113,6 @@ function getSearchProducts(store, keywords) {
         throw new Error(error);
     }
 }
+
+
+

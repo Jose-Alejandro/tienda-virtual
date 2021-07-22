@@ -15,4 +15,14 @@ module.exports = (app) => {
             res.status(400).json("Call to Mercado Libre Failed, try later" + err);
         }
     });
+    app.get('/product',cors(middlewares.corsOption) ,async (req, res) => {
+        try {
+            let result = await fetch(`https://api.mercadolibre.com/items/${req.query.q}`);
+            let response = await result.json();
+            res.send(response);
+        } catch (err) {
+            console.log(err);
+            res.status(400).json("Call to Mercado Libre Failed, try later" + err);
+        }
+    });
 };
