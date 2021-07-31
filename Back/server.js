@@ -5,7 +5,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const middlewares = require('./middlewares/middlewares');
-const mercadolibreRoutes = require('./routes/mercado-libre.routes');
+const mercadolibreRoutes = require('./app/view/mercado-libre.routes');
 
 /** Global middlewares */
 app.use(cors());

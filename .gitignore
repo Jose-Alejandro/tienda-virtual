@@ -89,3 +89,4 @@ $RECYCLE.BIN/
 node_modules
 package-lock.json
 Untitled-1
+*.sql

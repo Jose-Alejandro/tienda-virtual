@@ -1,6 +1,6 @@
 /** Mercado Libre End points */
 const fetch = require('node-fetch');
-const middlewares = require('../middlewares/middlewares');
+const middlewares = require('../../middlewares/middlewares');
 const cors = require('cors');
 
 
