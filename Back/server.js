@@ -26,7 +26,7 @@ async function startServer() {
 			console.log(`Server started at http://${process.env.HOST}:${process.env.PORT}`);
 		});
 	} catch (error) {
-		console.error('No se pudo conectar correctamebte con la Base de datos:', error);
+		console.error('Conection to Database failed: ' + error.message);
 	}
 }
 
