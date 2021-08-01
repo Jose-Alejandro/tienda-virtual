@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, null, null, {
 			type: 'default',
 			options: {
 				encrypt: true,
-				userName: process.env.DB_USR,
+				userName: process.env.DB_USER,
 				password: process.env.DB_PASS
 			}
 		},
