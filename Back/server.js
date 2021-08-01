@@ -8,6 +8,7 @@ const middlewares = require('./middlewares/middlewares');
 const mercadolibreRoutes = require('./app/view/mercado-libre.routes');
 const viewUsers = require('./app/view/view.Users');
 const db = require('./db/db.conection');
+const users = require('./db/db.model.users');
 
 
 /** Global middlewares */
@@ -19,7 +20,7 @@ app.use(middlewares.limiter);
 /** Start server */
 async function startServer() {
 	try {
-		// await users.sync();
+		await users.sync();
 		await db.authenticate();
 		console.log('Conected to Database');
 		app.listen(process.env.PORT, process.env.HOST, () => {
