@@ -75,3 +75,24 @@ module.exports.modifyUser = async (user) => {
 		throw error;
 	}
 };
+
+module.exports.deleteUser = async (user) => {
+	try {
+		let result = await users.destroy({
+			where: {
+				email: user.email,
+				userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role: 'user'
+			}
+		});
+		if (result) {
+			return true;
+		}
+		throw new Error('User no longer exists');
+	} catch (error) {
+		console.log(error.message);
+		throw error;
+	}
+};

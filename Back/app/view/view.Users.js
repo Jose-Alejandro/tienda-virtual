@@ -8,11 +8,11 @@ module.exports = async (app) => {
 		try {
 			if (await controlersUsers.registerUser(newUser)) {
 				res.status(200).json(newUser);
-			}
-			throw new Error('Internal error with the server, try again later');
+			} else
+				throw new Error('Internal error with the server, try again later');
 		} catch (error) {
 			console.log('error: ' + error.message);
-			res.status(500).json({ error: error.message });
+			res.status(500).send('error: ' + error.message);
 		}
 	});
 
@@ -25,6 +25,7 @@ module.exports = async (app) => {
 			} else
 				throw new Error("Invalid user");
 		} catch (error) {
+			console.log('error: ' + error.message);
 			res.status(400).send(error.message);
 		}
 	});
@@ -34,12 +35,12 @@ module.exports = async (app) => {
 			let user = await controlersUsers.retrieveUser(req.params.user);
 			res.status(200).json(user);
 		} catch (error) {
-			console.log(error);
+			console.log('error: ' + error.message);
 			res.status(400).send(error.message);
 		}
 	});
 
-	app.post('/user/', middlewares.validateToken, async (req, res) => {
+	app.post('/user', middlewares.validateToken, async (req, res) => {
 		let modifiedUser = req.body;
 		try {
 			let result = await controlersUsers.modifyUser(modifiedUser);
@@ -50,6 +51,16 @@ module.exports = async (app) => {
 		} catch (error) {
 			console.log('error: ' + error.message);
 			res.status(500).json({ error: error.message });
+		}
+	});
+
+	app.delete('/user', middlewares.validateToken, async (req, res) => {
+		try {
+			let user = await controlersUsers.deleteUser(req.params.user);
+			res.status(200).json(user);
+		} catch (error) {
+			console.log('error: ' + error.message);
+			res.status(400).send(error.message);
 		}
 	});
 

@@ -62,3 +62,15 @@ module.exports.modifyUser = async (newUser) => {
 		throw error;
 	}
 };
+
+
+module.exports.deleteUser = async (newUser) => {
+	try {
+		if (await modelsUsers.deleteUser(newUser)) {
+			return newUser.userName;
+		}
+		throw new Error('An internal error has ocurred, try later');
+	} catch (error) {
+		throw error;
+	}
+};
