@@ -55,3 +55,23 @@ module.exports.retrieveUser = async (user) => {
 		throw error;
 	}
 };
+
+module.exports.modifyUser = async (user) => {
+	try {
+		let result = await users.update(user, {
+			where: {
+				email: user.email,
+				userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role: 'user'
+			}
+		});
+		if (result[0]) {
+			return true;
+		}
+		throw new Error('User not in database, check user data');
+	} catch (error) {
+		throw error;
+	}
+};

@@ -51,3 +51,14 @@ module.exports.retrieveUser = async (user) => {
 		throw error;
 	}
 };
+
+module.exports.modifyUser = async (newUser) => {
+	try {
+		if (await modelsUsers.modifyUser(newUser)) {
+			return newUser.userName;
+		}
+		throw new Error('An internal error has ocurred, try later');
+	} catch (error) {
+		throw error;
+	}
+};
