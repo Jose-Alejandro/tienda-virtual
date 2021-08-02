@@ -14,3 +14,23 @@ module.exports.RegisterUser = async (user) => {
 		throw error;
 	}
 };
+
+module.exports.UserExists = async (user) => {
+	try {
+		let exists = await users.findOne({
+			where: {
+				email: user.email,
+				userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role: 'user'
+			}
+		});
+		if (exists != null) {
+			return true;
+		}
+		return false;
+	} catch (error) {
+		throw error;
+	}
+};

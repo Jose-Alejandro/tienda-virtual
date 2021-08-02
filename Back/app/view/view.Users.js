@@ -13,4 +13,17 @@ module.exports = async (app) => {
 			res.status(500).json({ error: error.message });
 		}
 	});
+
+	app.post('/users/login', async (req, res) => {
+		let user = req.body;
+		try {
+			if (await controlersUsers.validateUser(user)) {
+				let sessionToken = await controlersUsers.generateUserToken(user);
+				res.json(sessionToken);
+			} else
+				throw new Error("Invalid user");
+		} catch (error) {
+			res.status(400).send(error.message);
+		}
+	});
 };
