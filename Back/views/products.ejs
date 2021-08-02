@@ -1,0 +1,63 @@
+<%- include('headers/headers.prod.ejs')%>
+<body>
+    <h1>Productos</h1>
+
+    <button id="traerP">Traer</button>
+    <br>
+    <br>
+        <table border="1">
+            <tr>
+                <th>Id producto</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripcion</th>
+                <th>Calificacion</th>
+                <th>Marca</th>
+                <th>Origen</th>
+                <th>Activo</th>
+              </tr>
+            <% for(var i=0; i < resultProd.length; i++) { %>
+               <tr>
+                <td><%= resultProd[i].id_producto %></td>
+                <td><%= resultProd[i].nombre %></td>
+                <td><%= resultProd[i].precio %> $</td>
+                <td><%= resultProd[i].descripcion %></td>
+                <td><%= resultProd[i].calificacion %></td>
+                <td><%= resultProd[i].marca %></td>
+                <td><%= resultProd[i].origen %></td>
+                <td><%= resultProd[i].activo %></td>
+                 <td><button id='<%= resultProd[i].id_producto %>'onClick="eliminaProdDB(this.id)" >Eliminar</button></td>
+               </tr>
+            <% } %>
+        </table>            
+<br>
+
+<h2>Crear</h2>
+
+    <form id="form1" accept-charset="UTF-8" action = "http://127.0.0.1:3000/products" method="post"> 
+        <p>Nombre: <input type="text" name="nombre" size="30"></p>
+        <p>Precio: $ <input type="text" name="precio" /></p> 
+        <p>Descripcion: <input type="text" name="desc" size="30"></p>
+        <p>Imagen: <input type="file" name="img" /></p>
+        <p>Calificacion: <input type="text" name="cali" size="30"></p>
+        <p>Marca: <input type="text" name="marca" size="30"></p>
+        <input type = "submit"value = "Crear">
+      </form>
+<br>
+
+<h2>Actualizar</h2>
+
+<form id="form2" accept-charset="UTF-8" action = "http://127.0.0.1:3000/products/update" method="post"> 
+    <p>Id producto: <input type="text" name="id" size="30"></p>
+    <p>Nombre: <input type="text" name="nombre" size="30"></p>
+    <p>Precio: $ <input type="text" name="precio" /></p> 
+    <p>Descripcion: <input type="text" name="desc" size="30"></p>
+    <p>Imagen: <input type="file" name="img" /></p>
+    <p>Calificacion: <input type="text" name="cali" size="30"></p>
+    <p>Marca: <input type="text" name="marca" size="30"></p>
+    <input type = "submit" value = "Actualizar">
+  </form>
+<br>
+    <script src="/index.js"></script>
+</body>
+</html>
