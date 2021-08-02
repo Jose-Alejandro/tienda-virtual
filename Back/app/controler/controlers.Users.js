@@ -34,8 +34,20 @@ module.exports.generateUserToken = async (user) => {
 };
 
 module.exports.verifyUserToken = async (token) => {
-	if (jwt.verify(token, process.env.SECRET_KEY)) {
-		return true;
+	try {
+		const decodedUser = jwt.verify(token, process.env.SECRET_KEY);
+		if (decodedUser) {
+			return decodedUser;
+		}
+	} catch (error) {
+		throw error;
 	}
-	throw new Error('Invalid authentication, try to login again');
+};
+
+module.exports.retrieveUser = async (user) => {
+	try {
+		return await modelsUsers.retrieveUser(user);;
+	} catch (error) {
+		throw error;
+	}
 };

@@ -1,4 +1,5 @@
 const controlersUsers = require('../controler/controlers.Users');
+const middlewares = require('../../middlewares/middlewares');
 
 module.exports = async (app) => {
 	app.post('/users/register', async (req, res) => {
@@ -23,6 +24,16 @@ module.exports = async (app) => {
 			} else
 				throw new Error("Invalid user");
 		} catch (error) {
+			res.status(400).send(error.message);
+		}
+	});
+
+	app.get('/user', middlewares.validateToken, async (req, res) => {
+		try {
+			let user = await controlersUsers.retrieveUser(req.params.user);
+			res.status(200).json(user);
+		} catch (error) {
+			console.log(error);
 			res.status(400).send(error.message);
 		}
 	});

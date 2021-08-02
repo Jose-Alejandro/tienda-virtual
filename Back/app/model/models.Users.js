@@ -34,3 +34,24 @@ module.exports.UserExists = async (user) => {
 		throw error;
 	}
 };
+
+module.exports.retrieveUser = async (user) => {
+	try {
+		let User = await users.findOne({
+			where: {
+				email: user.email,
+				userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role: 'user'
+			}
+		});
+		if (User != null) {
+			return User.dataValues;
+		}
+		throw new Error('User no longer exists');
+	} catch (error) {
+		console.log(error.message);
+		throw error;
+	}
+};
