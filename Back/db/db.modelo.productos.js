@@ -26,6 +26,10 @@ const Productos = sequelize.define('productos', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
+    categoria: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+    },
     calificacion: {
         type: DataTypes.INTEGER(),
         allowNull: false
@@ -36,6 +40,10 @@ const Productos = sequelize.define('productos', {
     },
     origen: {
         type: DataTypes.CHAR(20),
+        allowNull: false
+    },
+    stock: {
+        type:DataTypes.INTEGER(),
         allowNull: false
     },
     activo: {

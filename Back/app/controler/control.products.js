@@ -24,6 +24,7 @@ module.exports.deleteProduct = async (id)=> {
 module.exports.createProduct = async (product)=> {
     try {
         const resultado = await modelProducts.createProduct(product)
+       
         return resultado
     }catch (error) {
         console.log(error)
@@ -36,6 +37,7 @@ module.exports.createProduct = async (product)=> {
 module.exports.updateProduct = async (product)=> {
     try {
         const resultado = await modelProducts.updateProduct(product)
+       
         return resultado
     }catch (error) {
         console.log(error)

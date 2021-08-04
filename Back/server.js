@@ -10,6 +10,7 @@ const sequelize = require('./db/db.conexion');
 const viewProducts = require('./app/view/view.products');
 const productos = require('./db/db.modelo.productos');
 
+
 // Antes de usar middlewarenpm install body-parser
 const bodyParser = require('body-parser');
 
@@ -32,7 +33,7 @@ app.set('views', __dirname + '/views')
 //Levantamos nuestro servidor
 async function inicioServer() {
     try {
-        await productos.sync({alter:true})
+        await productos.sync()
         await sequelize.authenticate()
         console.log('Conección estabilizada con DB correctamente');
         app.listen(process.env.PORT, function () {
