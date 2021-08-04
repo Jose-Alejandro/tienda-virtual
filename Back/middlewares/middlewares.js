@@ -14,6 +14,7 @@ const limiter = rateLimit({
 
 const corsOption = {
 	origin: function (origin, callback) {
+		console.log(process.env.WHITE_LIST);
 		if (process.env.WHITE_LIST.indexOf(origin) !== -1) {
 			callback(null, true);
 		} else {

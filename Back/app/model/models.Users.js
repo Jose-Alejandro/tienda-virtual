@@ -7,6 +7,8 @@ module.exports.RegisterUser = async (user) => {
 		if (exists != null) {
 			throw new Error('User already exists');
 		} else {
+			user.active = 'true';
+			user.role = 'user';
 			await users.create(user);
 			return true;
 		}
@@ -17,6 +19,7 @@ module.exports.RegisterUser = async (user) => {
 
 module.exports.UserExists = async (user) => {
 	try {
+		
 		let exists = await users.findOne({
 			where: {
 				email: user.email,
@@ -25,6 +28,7 @@ module.exports.UserExists = async (user) => {
 				active: 'true',
 				role: 'user'
 			}
+
 		});
 		if (exists != null) {
 			return true;

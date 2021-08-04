@@ -5,7 +5,7 @@ const cors = require('cors');
 
 
 module.exports = (app) => {
-    app.get('/trendProducts', cors(middlewares.corsOption), async (req, res) => {
+    app.get('/trendProducts',/* cors(middlewares.corsOption),*/ async (req, res) => {
         try {
             let result = await fetch(`https://api.mercadolibre.com/sites/MLM/search?q=${req.query.q}&limit=10`);
             let response = await result.json();
@@ -15,7 +15,7 @@ module.exports = (app) => {
             res.status(400).json("Call to Mercado Libre Failed, try later" + err);
         }
     });
-    app.get('/product', cors(middlewares.corsOption), async (req, res) => {
+    app.get('/product', /*cors(middlewares.corsOption),*/ async (req, res) => {
         try {
             let result = await fetch(`https://api.mercadolibre.com/items/${req.query.q}`);
             let response = await result.json();

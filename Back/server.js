@@ -9,6 +9,17 @@ const mercadolibreRoutes = require('./app/view/mercado-libre.routes');
 const viewUsers = require('./app/view/view.Users');
 const db = require('./db/db.conection');
 const users = require('./db/db.model.users');
+const viewProducts = require('./app/view/view.products');
+const productos = require('./db/db.modelo.productos');
+
+
+// Antes de usar middlewarenpm install body-parser
+const bodyParser = require('body-parser');
+
+
+//Utilice middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 
 /** Global middlewares */
@@ -16,11 +27,16 @@ app.use(cors());
 app.use(express.json());
 app.use(middlewares.limiter);
 
+app.use(express.static(__dirname + '/public'))
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views')
+
 
 /** Start server */
 async function startServer() {
 	try {
 		await users.sync();
+		await productos.sync();
 		await db.authenticate();
 		console.log('Conected to Database');
 		app.listen(process.env.PORT, process.env.HOST, () => {
@@ -35,5 +51,6 @@ startServer();
 
 /** Start API routes */
 mercadolibreRoutes(app);
-
+viewProducts(app);
 viewUsers(app);
+
