@@ -72,7 +72,7 @@ module.exports.modifyUser = async (user) => {
 		if (result[0]) {
 			return true;
 		}
-		throw new Error('User not in database, check user data');
+		throw new Error('User not active in database, check user data');
 	} catch (error) {
 		throw error;
 	}

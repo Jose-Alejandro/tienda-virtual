@@ -25,7 +25,7 @@ module.exports = async (app) => {
 				let sessionToken = await controlersUsers.generateUserToken(user);
 				res.json(sessionToken);
 			} else
-				throw new Error("Invalid user");
+				throw new Error("Invalid user, if deactivated please contact adminsitrator to reactivate it");
 		} catch (error) {
 			console.log('error: ' + error.message);
 			res.status(400).send(error.message);
@@ -52,7 +52,7 @@ module.exports = async (app) => {
 				throw new Error('Internal error with the server, try again later');
 		} catch (error) {
 			console.log('error: ' + error.message);
-			res.status(500).json({ error: error.message });
+			res.status(500).send('error: ' + error.message);
 		}
 	});
 
