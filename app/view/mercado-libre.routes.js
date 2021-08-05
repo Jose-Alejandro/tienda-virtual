@@ -12,7 +12,7 @@ module.exports = (app) => {
 			res.send(response);
 		} catch (err) {
 			console.log('error: ' + err.message);
-			res.status(400).send("Call to Mercado Libre Failed, try later" + err.message);
+			res.status(400).send('error: ' + err.message);
 		}
 	});
 	app.get('/product', /*cors(middlewares.corsOption),*/ async (req, res) => {
@@ -22,7 +22,7 @@ module.exports = (app) => {
 			res.send(response);
 		} catch (err) {
 			console.log(err);
-			res.status(400).send("Call to Mercado Libre Failed, try later" + err);
+			res.status(400).send('error: ' + err.message);
 		}
 	});
 };
