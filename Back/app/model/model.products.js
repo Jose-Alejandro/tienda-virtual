@@ -1,102 +1,100 @@
+//import the modules to use
 const sequelize = require('sequelize')
-const Productos = require('../../db/db.modelo.productos')
+const Products = require('../../db/db.modelo.products')
 
 
-//si existe
-
+//if existe
 module.exports.productExists = async (id)=>{
 
 }
 
-
-//Exportar nuestros modulos a utilizar
-module.exports.getAllProducts = async ()=> { //trae mientras esten activos
-
+//show products from  - database products
+module.exports.getAllProducts = async ()=> { //while are actives
     try {  
-        let resultado =  await Productos.findAll({
+        let result =  await Products.findAll({
             where: {
-            activo: 1
+            active: 1
             }
         })
-        return resultado;
+        return result;
     }  catch (err) {
-        throw new Error (err+ 'problema en modelos de productos') 
+        throw new Error (err+ 'problem in product models') 
     }
-   // console.log("All Products:", JSON.stringify(resultado, null, 2)); 
+   // console.log("All Products:", JSON.stringify(result, null, 2)); 
    
 }
 
-//"elimina" update, cambia valor de atributo activo a 0
-module.exports.deleteProduct = async (id)=> { //trae mientras esten activos
-
-    try {
-         
-        let resultado =  await Productos.update({
-            activo: 0
+//"delete" update, active =  0
+module.exports.deleteProduct = async (id)=> { 
+    try { 
+        let result =  await Products.update({
+            active: 0
         }, {
-            where: { id_producto: id }
+            where: { id_product: id }
         })
 
-        if(resultado == 1){// !CUIDADO CON EL CONTROLL DE IF Y EL AWAIT  
+        if(result == 1){// !careful --->  IF Y EL AWAIT  
             try {
-                resultado = await Productos.findOne({ where: {id_producto: id} })
+                result = await Products.findOne({ where: {id_product: id} })
             } catch (err) {
-                throw new Error (err+ 'problema en modelos de productos') 
+                throw new Error (err+ 'problem in product models') 
             }
         }
-        return resultado;   
+        return result;   
         }catch (err) {
-            throw new Error (err+ 'problema en modelos de productos')
+            throw new Error (err+ 'problem in product models')
     }
-   // console.log("All Products:", JSON.stringify(resultado, null, 2)); 
+   // console.log("All Products:", JSON.stringify(result, null, 2)); 
     
 }
-//crea producto
-module.exports.createProduct = async (product)=> { //trae mientras esten activos
 
+
+//create products
+module.exports.createProduct = async (product)=> { 
     try{
-        let resultado = await Productos.create({
-            nombre:product.nombre,
-             precio:product.precio,
-             descripcion:product.desc,
-             imagen:product.img,
-             calificacion:product.cali,
-             categoria:product.categ,
+        let result = await Products.create({
+            name:product.name,
+             price:product.price,
+             description:product.desc,
+             image:product.image,
+             qualification:product.quali,
+             category:product.categ,
              stock:product.stock ,
-             marca:product.marca,
-             origen:'local',
-             activo:1})
-        return resultado;
+             brand:product.brand,
+             origin:'local',
+             active:1})
+        return result;
 
     }catch(err){
         console.log(err)
-        throw new Error (err+ 'problema en modelos de productos')
+        throw new Error (err+ 'problem in product models')
     }
 }
 
-//actualiza producto
-module.exports.updateProduct = async (product)=> { //trae mientras esten activos
+
+//update product
+module.exports.updateProduct = async (product)=> { 
 
     try{
-        let resultado = Productos.update({
-            nombre: product.nombre,
-            precio: product.precio,
-            descripcion:product.desc,
-            imagen: product.img,
-            calificacion:product.cali,
-            marca: product.marca,
-            categoria:product.categ,
+        let result = Products.update({
+            name: product.name,
+            price: product.price,
+            description:product.desc,
+            image: product.image,
+            qualification:product.quali,
+            brand: product.brand,
+            category:product.categ,
             stock:product.stock, 
-            origen: 'local',
+            origin: 'local',
         }, {
             where: {
-                id_producto: product.id,
+                id_product: product.id,
             }
         })
-        return resultado;
+        return result;
 
     }catch(err){
         console.log(err)
-        throw new Error (err+ 'problema en modelos de productos')
+        throw new Error (err+ 'problem in product models')
     }
 }

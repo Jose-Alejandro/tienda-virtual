@@ -10,7 +10,7 @@ const viewUsers = require('./app/view/view.Users');
 const db = require('./db/db.conection');
 const users = require('./db/db.model.users');
 const viewProducts = require('./app/view/view.products');
-const productos = require('./db/db.modelo.productos');
+const products = require('./db/db.modelo.products');
 
 
 // Antes de usar middlewarenpm install body-parser
@@ -36,7 +36,7 @@ app.set('views', __dirname + '/views')
 async function startServer() {
 	try {
 		await users.sync();
-		await productos.sync();
+		await products.sync();
 		await db.authenticate();
 		console.log('Conected to Database');
 		app.listen(process.env.PORT, process.env.HOST, () => {

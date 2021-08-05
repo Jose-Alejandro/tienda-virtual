@@ -1,44 +1,44 @@
 //Importo los modulos necesarios
 const {DataTypes, Model } = require('sequelize');
-const sequelize = require('../db/db.conection')
+const sequelize = require('./db.conection')
 
-//Defino los modelos de DB que voy a utilizar
+//I define the DB models
 
-const Productos = sequelize.define('productos', {
-    id_producto: {
+const Products = sequelize.define('products', {
+    id_product: {
         type: DataTypes.INTEGER(),
         primaryKey: true,
         autoIncrement: true 
     },
-    nombre: {
+    name: {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    precio: {
+    price: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: false
     },
-    descripcion: {
+    description: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    imagen: {
+    image: {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    categoria: {
+    category: {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    calificacion: {
+    qualification: {
         type: DataTypes.INTEGER(),
         allowNull: false
     },
-    marca: {
+    brand: {
         type: DataTypes.CHAR(20),
         allowNull: false
     },
-    origen: {
+    origin: {
         type: DataTypes.CHAR(20),
         allowNull: false
     },
@@ -46,7 +46,7 @@ const Productos = sequelize.define('productos', {
         type:DataTypes.INTEGER(),
         allowNull: false
     },
-    activo: {
+    active: {
         type: DataTypes.BOOLEAN(),
         allowNull: false
     }
@@ -54,4 +54,4 @@ const Productos = sequelize.define('productos', {
     timestamps: true
 })
 
-module.exports = Productos
+module.exports = Products

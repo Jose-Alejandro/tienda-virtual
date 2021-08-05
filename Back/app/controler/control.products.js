@@ -1,44 +1,47 @@
+//import the modules to use
 const modelProducts = require('../model/model.products')
 
-//exportar los modulos que vamos a utilizar
+//export the modules to user
+
+//show products from the model products - database
 module.exports.getAllProducts = async ()=> {
     try {
-        const resultado = await modelProducts.getAllProducts()
-        return resultado
+        const result = await modelProducts.getAllProducts()
+        return result
     }catch (error) {
         console.log(error)
-        throw new Error ('Desde el controlador paso algo')
+        throw new Error ('product controller error')
     }
 }
-//elimina producto -- activo a 0
+//delete product -- active = 0
 module.exports.deleteProduct = async (id)=> {
     try {
-        const resultado = await modelProducts.deleteProduct(id)
-        return resultado
+        const result = await modelProducts.deleteProduct(id)
+        return result
     }catch (error) {
         console.log(error)
-        throw new Error ('Desde el controlador paso algo')
+        throw new Error ('product controller error')
     }
 }
-//crea producto
+//create product
 module.exports.createProduct = async (product)=> {
     try {
-        const resultado = await modelProducts.createProduct(product)
+        const result = await modelProducts.createProduct(product)
        
-        return resultado
+        return result
     }catch (error) {
         console.log(error)
-        throw new Error ('Desde el controlador paso algo')
+        throw new Error ('product controller error')
     }
     
 }
 
-//crea producto
+//update product
 module.exports.updateProduct = async (product)=> {
     try {
-        const resultado = await modelProducts.updateProduct(product)
+        const result = await modelProducts.updateProduct(product)
        
-        return resultado
+        return result
     }catch (error) {
         console.log(error)
         throw new Error ('Desde el controlador paso algo')

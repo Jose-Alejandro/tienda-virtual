@@ -1,59 +1,58 @@
-//importamos los modulos a utulizar
+//import the modules to use
 const controlProducts = require('../controler/control.products')
 const cors = require('cors');
 const middlewares = require('../../middlewares/middlewares');
 const path = require('path');  
 
 
-module.exports = (app) => {//muestra productos base de datos
+module.exports = (app) => {//show database products
     app.get('/products', async (req,res)=> {
         try{
-            let resultado = await controlProducts.getAllProducts();
-            console.log(resultado)
-            res.render("products", {resultProd:  resultado})
+            let result = await controlProducts.getAllProducts();
+            console.log(result )
+            res.render("products", {resultProd:  result })
         }catch (error) {
             console.log(error)
-            res.status(500).json('Algo raro ocurrio con esta pagina')
+            res.status(500).json('error in the request view products')
         } 
     })
     
-    //elimina producto - cambia el valor de activo a 0  //no permite patch
+    //delete product - change asset value to 0  //does not allow patch
     app.put('/products/:id', cors(middlewares.corsOption),async (req,res)=> {
         try{
-            let resultado = await controlProducts.deleteProduct(req.params.id)
-            console.log(resultado)
-            res.send('producto eliminado')
+            let result  = await controlProducts.deleteProduct(req.params.id)
+            console.log(result )
+            res.send('product deleted')
         }catch (error) {
             console.log(error)
-            res.status(500).json('Algo raro ocurrio con esta pagina')
+            res.status(500).json('error in the request view products')
         } 
     })
 
-    //crear nuevo producto
+    //create new product
     app.post('/products',cors(middlewares.corsOption), async (req,res)=> {
         try{
-           // let resultado = await controlProducts.deleteProduct(req.body.id)
-           let resultado = await controlProducts.createProduct(req.body)
-          res.send(resultado);
-            // res.send(resultado)
-           console.log(resultado)
+           let result  = await controlProducts.createProduct(req.body)
+          res.send(result );
+            // res.send(result)
+           console.log(result )
         }catch (error) {
             console.log(error)
-            res.status(500).json('Algo raro ocurrio con esta pagina')
+            res.status(500).json('error in the request view products')
         } 
     })
 
-     //actualizar producto
+     //update product
     app.post('/products/update',cors(middlewares.corsOption) ,async (req,res)=> {
         try{
-           // let resultado = await controlProducts.deleteProduct(req.body.id)
-           let resultado = await controlProducts.updateProduct(req.body)
-           res.send(req.body);
+           // let result = await controlProducts.deleteProduct(req.body.id)
+           let result  = await controlProducts.updateProduct(req.body)
+               res.send(req.body);
           //  res.send(resultado)
-            console.log(resultado)
+            console.log(result )
         }catch (error) {
             console.log(error)
-            res.status(500).json('Algo raro ocurrio con esta pagina')
+            res.status(500).json('error in the request view products')
         } 
     })
 };
