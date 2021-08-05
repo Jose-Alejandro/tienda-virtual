@@ -6,7 +6,8 @@ module.exports = async (app) => {
 	app.post('/users/register', async (req, res) => {
 		let newUser = req.body;
 		try {
-			if (await controlersUsers.registerUser(newUser)) {
+			const ok = await controlersUsers.registerUser(newUser);
+			if (ok) {
 				res.status(200).json(newUser);
 			} else
 				throw new Error('Internal error with the server, try again later');
@@ -19,7 +20,8 @@ module.exports = async (app) => {
 	app.post('/users/login', async (req, res) => {
 		let user = req.body;
 		try {
-			if (await controlersUsers.validateUser(user)) {
+			const ok = await controlersUsers.validateUser(user);
+			if (ok) {
 				let sessionToken = await controlersUsers.generateUserToken(user);
 				res.json(sessionToken);
 			} else

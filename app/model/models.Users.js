@@ -5,7 +5,7 @@ module.exports.RegisterUser = async (user) => {
 	try {
 		let exists = await users.findOne({ where: { email: user.email } });
 		if (exists != null) {
-			throw new Error('User already exists');
+			throw new Error('User already exists or it is inactive');
 		} else {
 			user.active = 'true';
 			user.role = 'user';
@@ -19,7 +19,6 @@ module.exports.RegisterUser = async (user) => {
 
 module.exports.UserExists = async (user) => {
 	try {
-		
 		let exists = await users.findOne({
 			where: {
 				email: user.email,
@@ -53,9 +52,8 @@ module.exports.retrieveUser = async (user) => {
 		if (User != null) {
 			return User.dataValues;
 		}
-		throw new Error('User no longer exists');
+		throw new Error('User no longer exists or is inactive');
 	} catch (error) {
-		console.log(error.message);
 		throw error;
 	}
 };
@@ -82,7 +80,8 @@ module.exports.modifyUser = async (user) => {
 
 module.exports.deleteUser = async (user) => {
 	try {
-		let result = await users.destroy({
+		user.active = 'false';
+		let result = await users.update(user, {
 			where: {
 				email: user.email,
 				userName: user.userName,
@@ -91,12 +90,11 @@ module.exports.deleteUser = async (user) => {
 				role: 'user'
 			}
 		});
-		if (result) {
+		if (result[0]) {
 			return true;
 		}
-		throw new Error('User no longer exists');
+		throw new Error('User no longer exists or already deactivated');
 	} catch (error) {
-		console.log(error.message);
 		throw error;
 	}
 };

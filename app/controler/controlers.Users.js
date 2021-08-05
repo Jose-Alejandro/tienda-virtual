@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports.registerUser = async (newUser) => {
 	try {
-		if (await modelsUsers.RegisterUser(newUser)) {
+		const ok = await modelsUsers.RegisterUser(newUser);
+		if (ok) {
 			return newUser.userName;
 		}
 		throw new Error('An internal error has ocurred, try later');
@@ -14,13 +15,13 @@ module.exports.registerUser = async (newUser) => {
 
 module.exports.validateUser = async (usr) => {
 	try {
-		if (await modelsUsers.UserExists(usr)) {
+		const ok = await modelsUsers.UserExists(usr);
+		if (ok) {
 			return true;
 		} else {
 			return false;
 		}
 	} catch (error) {
-		console.log(error.message);
 		throw error;
 	}
 };
@@ -46,7 +47,8 @@ module.exports.verifyUserToken = async (token) => {
 
 module.exports.retrieveUser = async (user) => {
 	try {
-		return await modelsUsers.retrieveUser(user);;
+		const result = await modelsUsers.retrieveUser(user);
+		return result;
 	} catch (error) {
 		throw error;
 	}
@@ -54,7 +56,8 @@ module.exports.retrieveUser = async (user) => {
 
 module.exports.modifyUser = async (newUser) => {
 	try {
-		if (await modelsUsers.modifyUser(newUser)) {
+		const ok = await modelsUsers.modifyUser(newUser);
+		if (ok) {
 			return newUser.userName;
 		}
 		throw new Error('An internal error has ocurred, try later');
@@ -66,7 +69,8 @@ module.exports.modifyUser = async (newUser) => {
 
 module.exports.deleteUser = async (newUser) => {
 	try {
-		if (await modelsUsers.deleteUser(newUser)) {
+		const ok = await modelsUsers.deleteUser(newUser);
+		if (ok) {
 			return newUser.userName;
 		}
 		throw new Error('An internal error has ocurred, try later');
