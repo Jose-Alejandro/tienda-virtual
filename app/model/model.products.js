@@ -24,6 +24,40 @@ module.exports.getAllProducts = async ()=> { //while are actives
    
 }
 
+module.exports.getProductId = async (id)=> { //while are actives
+    try {  
+        let result =  await Products.findAll({
+            where: {
+            active: 1,
+            id_product: id
+            }
+        })
+        return result;
+    }  catch (err) {
+        throw new Error (err+ 'problem in product models') 
+    }
+   // console.log("All Products:", JSON.stringify(result, null, 2)); 
+   
+}
+//get products category local
+module.exports.getProductsCategory = async (category)=> { //while are actives
+    try {  
+        let result =  await Products.findAll({
+            where: {
+            active: 1,
+            category: category
+            }
+        })
+        return result;
+    }  catch (err) {
+        throw new Error (err+ 'problem in product models') 
+    }
+   // console.log("All Products:", JSON.stringify(result, null, 2)); 
+   
+}
+
+
+
 //"delete" update, active =  0
 module.exports.deleteProduct = async (id)=> { 
     try { 
@@ -56,7 +90,7 @@ module.exports.createProduct = async (product)=> {
             name:product.name,
              price:product.price,
              description:product.desc,
-             image:product.image,
+             image:`./assets/img/${product.image}`,
              qualification:product.quali,
              category:product.categ,
              stock:product.stock ,
@@ -80,7 +114,7 @@ module.exports.updateProduct = async (product)=> {
             name: product.name,
             price: product.price,
             description:product.desc,
-            image: product.image,
+            image:`./assets/img/${product.image}`,
             qualification:product.quali,
             brand: product.brand,
             category:product.categ,

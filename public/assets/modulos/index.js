@@ -3,6 +3,7 @@
 
 
 const defaultSearch = 'Tarjeta grafica';
+const defaultCategory = 'mouse';
 const ML_ENDPOINT = 'trendProducts';
 
 
@@ -59,12 +60,74 @@ class Store {
 		imageContainer.appendChild(itemImage);
 		imageContainer.appendChild(addButton);
 	}
+//create element local
+    createTrendElementLocal(product) {
+		let productContainer = document.getElementById("product-local-container");
+
+		let row = document.createElement("div");
+		row.classList.add("row");
+		row.classList.add("featurette");
+
+		let divider = document.createElement("hr");
+		divider.classList.add("featurette-divider");
+
+		let headerDiv = document.createElement("div");
+		headerDiv.classList.add("col-md-7");
+
+		let productHeader = document.createElement("h2");
+		productHeader.classList.add("featurette-heading");
+		productHeader.textContent = product.name;
+
+		let itemPrice = document.createElement('p');
+		itemPrice.classList.add('lead');
+		itemPrice.textContent = Intl.NumberFormat('en-EN', { style: "currency", currency: "MXN", }).format(product.price);
+
+		let imageContainer = document.createElement("div");
+		imageContainer.classList.add("col-md-5");
+
+		let itemImage = document.createElement("img");
+		itemImage.setAttribute("src", product.image);
+		itemImage.style.width = "300px";
+		itemImage.style.height = "300px";
+
+		let addButton = document.createElement("button");
+		addButton.setAttribute("id", "addToCar");
+		addButton.setAttribute("onclick", `clickAdd('${product.id_product}')`);
+		addButton.classList.add("btn");
+		addButton.classList.add("btn-primary");
+		addButton.textContent = 'Add to cart';
+
+		productContainer.appendChild(divider);
+		productContainer.appendChild(row);
+		row.appendChild(headerDiv);
+		headerDiv.appendChild(productHeader);
+		headerDiv.appendChild(itemPrice);
+		row.appendChild(imageContainer);
+		imageContainer.appendChild(itemImage);
+		imageContainer.appendChild(addButton);
+	}
 	/** funcion que usa la palabras claves para buscar y traer productos */
 	async getProductsFromKeyword(word) {
 		try {
 			const response = await fetch(`http://127.0.0.1:3000/${ML_ENDPOINT}?q=${word}`);
 			const products = await response.json(); //promesa en espera
 			return products;
+		} catch (error) {
+			throw error;
+		}
+
+	}
+//** get products local db super store */
+    async getProductsLocal(category) {
+		let productContainer = document.getElementById("product-local-container");
+		productContainer.innerHTML = '';
+		try {
+			const response = await fetch(`http://127.0.0.1:3000/products/${category}`)
+			const products = await response.json(); //promesa en espera
+
+            for (let product in products) {
+				this.createTrendElementLocal(products[product]);
+			}
 		} catch (error) {
 			throw error;
 		}
@@ -85,9 +148,15 @@ class Store {
 			throw error;
 		}
 	}
-
+    //valida antes
 	start() {
-		myStore.getTrendProducts();
+        if(window.location.pathname =='/index.html'){
+            myStore.getTrendProducts();
+        }
+        if(window.location.pathname =='/LocalProducts.html'){
+            myStore.getProductsLocal(defaultCategory);
+        }
+		
 	}
 }
 
@@ -111,4 +180,8 @@ function getSearchProducts(store, keywords) {
 	} catch (error) {
 		throw error;
 	}
+}
+
+function getCategory(cat){
+	myStore.getProductsLocal(cat)
 }

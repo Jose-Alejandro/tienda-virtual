@@ -13,6 +13,28 @@ module.exports.getAllProducts = async ()=> {
         throw new Error ('product controller error')
     }
 }
+//get product->  id
+module.exports.getProductId = async (id)=> {
+    try {
+        const result = await modelProducts.getProductId(id)
+        return result
+    }catch (error) {
+        console.log(error)
+        throw new Error ('product controller error')
+    }
+}
+
+//get product->  category
+module.exports.getProductsCategory = async (category)=> {
+    try {
+        const result = await modelProducts.getProductsCategory(category)
+        return result
+    }catch (error) {
+        console.log(error)
+        throw new Error ('product controller error')
+    }
+}
+
 //delete product -- active = 0
 module.exports.deleteProduct = async (id)=> {
     try {

@@ -1,31 +1,25 @@
 
 /*
-
 class Cart(user) {
     constructor() {
         let total = 0;
     }
-
     AddProduct(product) {
         this.products.push(product);
     };
-
     RemoveProduct(id) {
         this.products.remove(id);
     };
-
     Buy() {
         checkCreditCard();
         applyCoupon();
         pay();
     };
-
     getTotal() {};
     applyCoupon() {};
     checkCreditCard() {};
     pay() {};
 }
-
 class Productos() {
     constructor() {
         this.id = 0;
@@ -41,7 +35,6 @@ class Productos() {
     UpdateProduct(id, product) {
         UpdateToDB(id, product);
     };
-
     DeleteProduct() {
         deleteFromDB(this.id);
     };
@@ -49,7 +42,6 @@ class Productos() {
         retrieveDB(this.id);
     };
 }
-
 */
 
 
@@ -60,6 +52,7 @@ class Cart {
         this.clave = clave;
         this.productos = this.obtener();
         this.ML_ENDPOINT= 'product';
+        this.total=0;
         
     }
     agregar(producto) {
@@ -72,15 +65,21 @@ class Cart {
     elimina(prod) {
         var i =  this.productos.indexOf(prod);
         if ( i != -1 ) {
-            this.productos.splice( i,1 );
-            console.log(this.productos[1]);  
+            this.productos.splice( i,1 );    
          }
         localStorage.setItem(this.clave,JSON.stringify( this.productos));
-       let hijo = document.getElementById(prod);
-       hijo.parentNode.removeChild(hijo)
-       let contCar = document.getElementById("contCar");
-             contCar.textContent = this.obtenerConteo();
+        let hijo = document.getElementById(prod);
+        hijo.parentNode.removeChild(hijo)
+        console.log(this.productos); 
+    
+        location.reload();
+     //   let contCar = document.getElementById("contCar");
+      //  contCar.textContent = this.obtenerConteo();
+        
+       
     }
+
+
     obtener() {
         if ( this.clave in localStorage){
             return JSON.parse(localStorage.getItem(this.clave))
@@ -108,21 +107,42 @@ class Cart {
     
 
     async mostrarProductos(){
-        let total=0;
+
         for (const i in  this.productos) {
                 try {
+                    if( this.productos[i].startsWith("M")){
                     const response = await fetch(`http://127.0.0.1:3000/${this.ML_ENDPOINT}?q=${this.productos[i]}`);
                     const item = await response.json(); //promesa en espera
-                    console.log(item);
-                    total+= item.price;
+                   // console.log(item);
+                    this.total+= item.price;
                     this.createElementProduct(item);
+                    }
                 } catch (error) {
                     throw new Error(error);
                 }
           }
           let totalCar = document.getElementById("totalCar");
-          totalCar.textContent = Intl.NumberFormat('en-EN', { style: "currency", currency: "MXN", }).format(total);
+          totalCar.textContent = Intl.NumberFormat('en-EN', { style: "currency", currency: "MXN", }).format(this.total);
     }
+
+    async mostrarProductosLocal(){
+
+        for (const i in  this.productos) {
+                try {
+                    if( this.productos[i].match(/^[0-9]+$/)){//si empieza con numeros == local
+                        const response = await fetch(`http://127.0.0.1:3000/product/${this.productos[i]}`,{method: 'get'});
+                        const item = await response.json(); //promesa en espera 
+                       this.createElementLocal(item[0]);
+                      this.total+= item[0].price;
+                    }
+                } catch (error) {
+                    throw new Error(error);
+                }
+          }
+          let totalCar = document.getElementById("totalCar");
+          totalCar.textContent = Intl.NumberFormat('en-EN', { style: "currency", currency: "MXN", }).format(this.total);
+    }
+
 
     createElementProduct(item){
         let listProducts = document.getElementById("listProducts");
@@ -165,7 +185,51 @@ class Cart {
         li.appendChild(span);
         span.appendChild(button);
     }
+
+    
+    createElementLocal(item){
+        let listProducts = document.getElementById("listProducts");
+       
+
+        let li = document.createElement("li");
+        li.classList.add("list-group-item");
+        li.classList.add("d-flex");
+        li.classList.add("justify-content-between");
+        li.classList.add("lh-sm");
+        li.setAttribute('id',item.id_product);
+
+        let div = document.createElement("div");
+
+        let h6 = document.createElement("h6");
+        h6.classList.add("my-0");
+        h6.textContent = item.name;
+
+        let button = document.createElement("button");
+        button.classList.add("btn");
+        button.classList.add("btn-danger");
+        button.classList.add( "m-5");
+        button.textContent = 'Borrar';
+        button.setAttribute("onclick",`eliminaProducto('${item.id_product}')`);
+
+
+        let itemImage = document.createElement("img");
+        itemImage.setAttribute("src", item.image);
+        itemImage.style.width = "100px";
+        itemImage.style.height = "100px";
+
+        let span = document.createElement("span");
+        span.classList.add("text-muted");
+        span.textContent = Intl.NumberFormat('en-EN', { style: "currency", currency: "MXN", }).format(item.price);
+
+        listProducts.appendChild(li);
+        li.appendChild(div);
+        div.appendChild(h6);
+        div.appendChild(itemImage);
+        li.appendChild(span);
+        span.appendChild(button);
+    }
 }
+
 
 //***************/
 let limp = document.getElementById('limp')
@@ -181,6 +245,9 @@ if(document.getElementById('check')){
 })
 }
 //fucniones externas
+
+
+
 function clickAdd(prod){
     Carrito.agregar(prod);
     console.log(Carrito.productos);
@@ -192,13 +259,10 @@ function eliminaProducto(prod){
 
 function cargarProductos(){
     Carrito.mostrarProductos(); 
+    Carrito.mostrarProductosLocal();
 }
 
 function clearCar(){
     Carrito.limpiar();
     console.log('limpia')
 }
-
-
-
-
