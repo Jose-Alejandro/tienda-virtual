@@ -7,5 +7,4 @@ module.exports.createOrder = async () => {
 	} catch (error) {
 		throw error;
 	}
-
 };
