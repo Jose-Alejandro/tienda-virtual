@@ -11,6 +11,8 @@ const db = require('./db/db.conection');
 const users = require('./db/db.model.users');
 const viewProducts = require('./app/view/view.products');
 const products = require('./db/db.modelo.products');
+const order = require('./db/db.model.order');
+const sells = require('./app/view/vew.sells');
 
 // Antes de usar middlewarenpm install body-parser
 const bodyParser = require('body-parser');
@@ -36,6 +38,7 @@ async function startServer() {
 	try {
 		await users.sync();
 		await products.sync();
+		await order.sync();
 		await db.authenticate();
 		console.log('Conected to Database');
 		app.listen(process.env.PORT, process.env.HOST, () => {
@@ -52,3 +55,4 @@ startServer();
 mercadolibreRoutes(app);
 viewProducts(app);
 viewUsers(app);
+sells(app);
