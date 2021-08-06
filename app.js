@@ -12,13 +12,12 @@ const users = require('./db/db.model.users');
 const viewProducts = require('./app/view/view.products');
 const products = require('./db/db.modelo.products');
 
-
 // Antes de usar middlewarenpm install body-parser
 const bodyParser = require('body-parser');
 
 
 //Utilice middleware
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
@@ -27,9 +26,9 @@ app.use(cors());
 app.use(express.json());
 app.use(middlewares.limiter);
 
-app.use(express.static(__dirname + '/public'))
-app.set('view engine', 'ejs')
-app.set('views', __dirname + '/views')
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 
 /** Start server */
@@ -53,4 +52,3 @@ startServer();
 mercadolibreRoutes(app);
 viewProducts(app);
 viewUsers(app);
-
