@@ -30,7 +30,7 @@ module.exports = (app) => {//show database products
     }) 
     
     //getProduct id
-    app.get('/product/:id',cors(middlewares.corsOption), async (req,res)=> {
+    app.get('/product/:id',/*cors(middlewares.corsOption)*/ async (req,res)=> {
         try{
             let result = await controlProducts.getProductId(req.params.id);
             console.log(result )
