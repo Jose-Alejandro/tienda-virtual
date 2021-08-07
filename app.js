@@ -36,9 +36,10 @@ app.set('views', __dirname + '/views');
 /** Start server */
 async function startServer() {
 	try {
-		await users.sync({alter:true});
-		await products.sync({alter:true});
-		await order.sync({alter:true});
+		await users.sync({ alter: true });
+		await products.sync({ alter: true });
+		await order.Orders.sync({ alter: true });
+		await order.UserOrders.sync({ alter: true });
 		await db.authenticate();
 		console.log('Conected to Database');
 		app.listen(process.env.PORT, process.env.HOST, () => {

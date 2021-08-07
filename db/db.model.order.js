@@ -14,4 +14,33 @@ const Orders = sequelize.define('orders',
 	}
 );
 
-module.exports = Orders;
+
+const UserOrders = sequelize.define('user_orders',
+	{
+		order_id: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+		product_id: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+		userName: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+		selling_price: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+		quantity: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+	},
+	{
+		timestamps: true
+	}
+);
+
+module.exports = { Orders, UserOrders };
