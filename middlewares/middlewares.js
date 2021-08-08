@@ -1,7 +1,8 @@
 /** Import modules */
 const rateLimit = require("express-rate-limit");
 const controlerUsers = require('../app/controler/controlers.Users');
-
+const Joi = require('joi');
+const userValidationModel = require('../app/model/models.userValidation');
 
 /** Rate limiter middleware */
 const limiter = rateLimit({
@@ -40,4 +41,28 @@ const validateToken = async (req, res, next) => {
 	}
 };
 
-module.exports = { corsOption, limiter, validateToken };
+
+const validateLoginInfo = async (req, res, next) => {
+	try {
+		await Joi.attempt(req.body, userValidationModel.loginModel, 'invalid login data');
+		return next();
+	} catch (error) {
+		console.log(error.message);
+		res.status(400).send(error.message);
+	}
+};
+
+const validateRegisterInfo = async (req, res, next) => {
+	try {
+		await Joi.attempt(req.body, userValidationModel.registerModel, 'invalid user data');
+		return next();
+	} catch (error) {
+		console.log(error.message);
+		res.status(400).send(error.message);
+	}
+};
+
+module.exports = {
+	corsOption, limiter, validateToken,
+	validateLoginInfo, validateRegisterInfo
+};
