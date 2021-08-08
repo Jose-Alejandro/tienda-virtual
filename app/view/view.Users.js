@@ -3,7 +3,7 @@ const middlewares = require('../../middlewares/middlewares');
 
 module.exports = async (app) => {
 
-	app.post('/users/register', async (req, res) => {
+	app.post('/users/register', middlewares.validateRegisterInfo, async (req, res) => {
 		let newUser = req.body;
 		try {
 			const ok = await controlersUsers.registerUser(newUser);
@@ -17,7 +17,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/users/login', async (req, res) => {
+	app.post('/users/login', middlewares.validateLoginInfo, async (req, res) => {
 		let user = req.body;
 		try {
 			const ok = await controlersUsers.validateUser(user);
@@ -34,9 +34,9 @@ module.exports = async (app) => {
 
 	app.post('/admin/login', async (req, res) => {
 		let user = req.body;
-		try { 
+		try {
 			const ok = await controlersUsers.validateAdmin(user);
-			
+
 			if (ok) {
 				let sessionToken = await controlersUsers.generateUserToken(user);
 				res.json(sessionToken);
@@ -59,7 +59,7 @@ module.exports = async (app) => {
 	});
 
 	app.post('/userAdmin', middlewares.validateToken, async (req, res) => {
-		
+
 		try {
 			let user = await controlersUsers.retrieveUserAdmin(req.params.user);
 			res.status(200).json(user);
