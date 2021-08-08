@@ -32,9 +32,36 @@ module.exports = async (app) => {
 		}
 	});
 
+	app.post('/admin/login', async (req, res) => {
+		let user = req.body;
+		try { 
+			const ok = await controlersUsers.validateAdmin(user);
+			
+			if (ok) {
+				let sessionToken = await controlersUsers.generateUserToken(user);
+				res.json(sessionToken);
+			} else
+				throw new Error("Invalid user, if deactivated please contact adminsitrator to reactivate it");
+		} catch (error) {
+			console.log('error: ' + error.message);
+			res.status(400).send(error.message);
+		}
+	});
+
 	app.get('/user', middlewares.validateToken, async (req, res) => {
 		try {
 			let user = await controlersUsers.retrieveUser(req.params.user);
+			res.status(200).json(user);
+		} catch (error) {
+			console.log('error: ' + error.message);
+			res.status(400).send(error.message);
+		}
+	});
+
+	app.post('/userAdmin', middlewares.validateToken, async (req, res) => {
+		
+		try {
+			let user = await controlersUsers.retrieveUserAdmin(req.params.user);
 			res.status(200).json(user);
 		} catch (error) {
 			console.log('error: ' + error.message);

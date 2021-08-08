@@ -9,7 +9,7 @@ module.exports = (app) => {//show database products
     app.get('/adminProducts', async (req,res)=> {
         try{
             let result = await controlProducts.getAllProducts();
-            console.log(result )
+           // console.log(result )
             res.render("products", {resultProd:  result })
         }catch (error) {
             console.log(error)
@@ -21,7 +21,7 @@ module.exports = (app) => {//show database products
     app.get('/products/:category', async (req,res)=> {
         try{
             let result = await controlProducts.getProductsCategory(req.params.category);
-            console.log(result )
+           // console.log(result )
             res.send(result)
         }catch (error) {
             console.log(error)
@@ -33,7 +33,7 @@ module.exports = (app) => {//show database products
     app.get('/product/:id',/*cors(middlewares.corsOption)*/ async (req,res)=> {
         try{
             let result = await controlProducts.getProductId(req.params.id);
-            console.log(result )
+           // console.log(result )
             res.send(result)
         }catch (error) {
             console.log(error)
@@ -45,7 +45,7 @@ module.exports = (app) => {//show database products
     app.put('/products/:id', cors(middlewares.corsOption),async (req,res)=> {
         try{
             let result  = await controlProducts.deleteProduct(req.params.id)
-            console.log(result )
+           // console.log(result )
             res.send('product deleted')
         }catch (error) {
             console.log(error)
@@ -59,7 +59,8 @@ module.exports = (app) => {//show database products
            let result  = await controlProducts.createProduct(req.body)
           res.send(result );
             // res.send(result)
-           console.log(result )
+
+           location.href='login.html'
         }catch (error) {
             console.log(error)
             res.status(500).json('error in the request view products')
@@ -73,7 +74,7 @@ module.exports = (app) => {//show database products
            let result  = await controlProducts.updateProduct(req.body)
                res.send(req.body);
           //  res.send(resultado)
-            console.log(result )
+          //  console.log(result )
         }catch (error) {
             console.log(error)
             res.status(500).json('error in the request view products')

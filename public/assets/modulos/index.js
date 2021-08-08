@@ -150,7 +150,7 @@ class Store {
 	}
     //valida antes
 	start() {
-        if(window.location.pathname =='/index.html'){
+        if(window.location.pathname =='/index.html' || window.location.pathname =='/'){
             myStore.getTrendProducts();
         }
         if(window.location.pathname =='/LocalProducts.html'){

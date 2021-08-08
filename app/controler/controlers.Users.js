@@ -26,6 +26,19 @@ module.exports.validateUser = async (usr) => {
 	}
 };
 
+module.exports.validateAdmin = async (usr) => {
+	try {
+		const ok = await modelsUsers.AdminExists(usr);
+		if (ok) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (error) {
+		throw error;
+	}
+};
+
 module.exports.generateUserToken = async (user) => {
 	const token = jwt.sign(
 		{ data: user },
@@ -48,6 +61,15 @@ module.exports.verifyUserToken = async (token) => {
 module.exports.retrieveUser = async (user) => {
 	try {
 		const result = await modelsUsers.retrieveUser(user);
+		return result;
+	} catch (error) {
+		throw error;
+	}
+};
+
+module.exports.retrieveUserAdmin = async (user) => {
+	try {
+		const result = await modelsUsers.retrieveUserAdmin(user);
 		return result;
 	} catch (error) {
 		throw error;

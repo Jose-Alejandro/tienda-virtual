@@ -38,6 +38,28 @@ module.exports.UserExists = async (user) => {
 	}
 };
 
+
+module.exports.AdminExists= async (user) => {
+	try {
+		let exists = await users.findOne({
+			where: {
+				email: user.email,
+				//userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role:  user.role
+			}
+
+		});
+		if (exists != null) {
+			return true;
+		}
+		return false;
+	} catch (error) {
+		throw error;
+	}
+};
+
 module.exports.retrieveUser = async (user) => {
 	try {
 		let User = await users.findOne({
@@ -47,6 +69,27 @@ module.exports.retrieveUser = async (user) => {
 				password: user.password,
 				active: 'true',
 				role: 'user'
+			}
+		});
+		if (User != null) {
+			return User.dataValues;
+		}
+		throw new Error('User no longer exists or is inactive');
+	} catch (error) {
+		throw error;
+	}
+};
+
+
+module.exports.retrieveUserAdmin = async (user) => {
+	try {
+		let User = await users.findOne({
+			where: {
+				email: user.email,
+				//userName: user.userName,
+				password: user.password,
+				active: 'true',
+				role: 'admin'
 			}
 		});
 		if (User != null) {

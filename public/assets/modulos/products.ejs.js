@@ -1,11 +1,50 @@
 console.log('Hola mundo desde el servidor pero lo enviamos al front')
 //eventos para vista productosCrud.ejs /borones CRUD PRODUCTOS
 
+//verifica session y token y trae
+
+window.onload = async function (){
+    let data =  await JSON.parse(sessionStorage.getItem('dataSession'))
+
+    if (sessionStorage['dataSession']){
+    let res = await fetch('http://localhost:3000/userAdmin', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + data.token
+          },
+        body: JSON.stringify({
+            "email": data.email,
+            "password" : data.pass,
+            "role" : data.role
+        })
+    })
+         let result =  await res.json()
+         document.getElementById('dataUser').textContent  = `Bienvenido ${result.role} ${result.names} id ${result.id}`
+    
+    }else{
+        
+        location.href = '/loginAdmin.html'
+    }
+    
+
+}
+
+const exit = document.getElementById('exit')
+exit.addEventListener('click', async ()=> {
+    sessionStorage.clear(); 
+    location.href = '/loginAdmin.html'
+})
+
+
 //peticion a endpoint vista (read crud) /mustra productos DB
 const traerP = document.getElementById('getProd')
 traerP.addEventListener('click', async ()=> {
     location.reload();
 })
+
+
 
 async function deleteProduct(id_prod){
     var opcion = confirm("Desea eliminar el producto");
@@ -19,23 +58,3 @@ async function deleteProduct(id_prod){
     location.reload()
 }
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-    'use strict'
-  
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-  
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-  
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
