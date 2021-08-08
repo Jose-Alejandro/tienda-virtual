@@ -32,7 +32,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/admin/login', async (req, res) => {
+	app.post('/admin/login', middlewares.validateLoginInfo, async (req, res) => {
 		let user = req.body;
 		try {
 			const ok = await controlersUsers.validateAdmin(user);
@@ -69,7 +69,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/user', middlewares.validateToken, async (req, res) => {
+	app.post('/user', middlewares.validateToken, middlewares.validateRegisterInfo, async (req, res) => {
 		let modifiedUser = req.body;
 		try {
 			let result = await controlersUsers.modifyUser(modifiedUser);
