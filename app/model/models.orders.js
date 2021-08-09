@@ -13,7 +13,7 @@ module.exports.createOrder = async () => {
 module.exports.createUserOrder = async (myOrder) => {
 	try {
 		for (let product in myOrder.products) {
-			
+
 			let item = {
 				order_id: myOrder.order_id,
 				email: myOrder.email,
@@ -22,7 +22,7 @@ module.exports.createUserOrder = async (myOrder) => {
 				quantity: myOrder.products[product].quantity
 			};
 			await order.UserOrders.create(item);
-			
+
 		}
 		return myOrder;
 	} catch (error) {
@@ -35,7 +35,7 @@ module.exports.getUserOrders = async (user) => {
 		const res = await order.UserOrders.findAll(
 			{
 				where: {
-					userName: user.userName
+					email: user.email
 				}
 			});
 		return res;
@@ -49,7 +49,7 @@ module.exports.getUserOrder = async (user, id) => {
 		const res = await order.UserOrders.findAll(
 			{
 				where: {
-					userName: user.userName,
+					email: user.email,
 					order_id: id
 				}
 			});
