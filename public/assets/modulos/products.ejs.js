@@ -49,9 +49,13 @@ traerP.addEventListener('click', async ()=> {
 async function deleteProduct(id_prod){
     var opcion = confirm("Desea eliminar el producto");
     if (opcion == true) {
+    try {
         let resultado = await fetch(`http://127.0.0.1:3000/products/${id_prod}`,{method: 'put'})
         console.log('se elimino producto');
         console.log(resultado)
+    } catch (error) {
+        console.log(error)
+    }
 	} else {
         console.log('se cancelo la eliminacion');
 	}

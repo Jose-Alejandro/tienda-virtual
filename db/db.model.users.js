@@ -28,11 +28,11 @@ const Users = sequelize.define('users', {
 		allowNull: false
 	},
 	billing_address: {
-		type: DataTypes.STRING(15),
+		type: DataTypes.STRING(30),
 		allowNull: false
 	},
 	delivery_address: {
-		type: DataTypes.STRING(15),
+		type: DataTypes.STRING(30),
 		allowNull: false
 	},
 	active: {

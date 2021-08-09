@@ -13,14 +13,16 @@ module.exports.createOrder = async () => {
 module.exports.createUserOrder = async (myOrder) => {
 	try {
 		for (let product in myOrder.products) {
+			
 			let item = {
 				order_id: myOrder.order_id,
-				userName: myOrder.userName,
+				email: myOrder.email,
 				product_id: myOrder.products[product].product_id,
 				selling_price: myOrder.products[product].selling_price,
 				quantity: myOrder.products[product].quantity
 			};
 			await order.UserOrders.create(item);
+			
 		}
 		return myOrder;
 	} catch (error) {

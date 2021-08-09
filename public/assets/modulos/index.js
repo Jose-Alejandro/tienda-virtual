@@ -1,5 +1,38 @@
 /** Constantes */
 
+//verfica si hay seciones activas para traer
+
+window.onload = async function (){
+    let data =  await JSON.parse(sessionStorage.getItem('dataSession'))
+
+    if (sessionStorage['dataSession']){
+		try {
+    let res = await fetch('http://localhost:3000/user', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + data.token
+          },
+        body: JSON.stringify({
+            "email": data.email,
+            "password" : data.pass,
+            "role" : data.role
+        })
+    })
+         let result =  await res.json()
+         document.getElementById('user').textContent  = `Bienvenido ${result.userName}`
+		 document.getElementById("Sign_in").style.visibility = "hidden";
+		 document.getElementById("Sign_up").style.visibility = "hidden";
+
+		} catch (error) {
+			console.log(error)
+		}
+    
+    }
+    
+}
+
 
 
 const defaultSearch = 'Tarjeta grafica';

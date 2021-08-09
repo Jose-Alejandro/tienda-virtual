@@ -1,24 +1,20 @@
-
-
-
-class admin {
-    constructor (userAdmin, pass) {
-        this.email = userAdmin
+class usuario {
+    constructor (Usuario, pass) {
+        this.email = Usuario
         this.pass = pass
         this.token = ''
-        this.role = 'admin'
+        this.role = 'user'
     }
 
-    static async guardaAdmin (userAdmin) {
-        sessionStorage.setItem('dataSession', JSON.stringify(userAdmin))
+    static async guardaUsuario (Usuario) {
+        sessionStorage.setItem('dataSession', JSON.stringify(Usuario))
     }
 
-    static async recuperaAdmin () {
+    static async recuperaUsuario () {
         let resultado = await JSON.parse(sessionStorage.getItem('dataSession'))
         return resultado
     }
 }
-
 
 
 let Sign_in = document.getElementById('Sign_in')
@@ -30,13 +26,13 @@ Sign_in.addEventListener('click', async ()=> {
 
     var formulario = document.forms['form_sign'];
 
-    admin.guardaAdmin(new admin (formulario['email'].value,formulario['pass'].value))
+    usuario.guardaUsuario(new usuario (formulario['email'].value,formulario['pass'].value))
     console.log('sing in')
     try {
         
-    let data = await admin.recuperaAdmin()
+    let data = await usuario.recuperaUsuario()
 
-    let resultado = await fetch('http://localhost:3000/admin/login', {
+    let resultado = await fetch('http://localhost:3000/users/login', {
         method: 'post',
         headers: {
             "Accept": "application/json, text/plain, */*",
@@ -52,11 +48,11 @@ Sign_in.addEventListener('click', async ()=> {
     let datosVuelta = await resultado.json()
     data.token = datosVuelta
     console.log(data)
-    admin.guardaAdmin(data)
+    usuario.guardaUsuario(data)
     
     if (resultado.status === 200){
         console.log("redirecciona");
-        location.href ="./adminProducts";
+        location.href ="./index.html";
     }
 
     } catch (error) {
@@ -65,6 +61,3 @@ Sign_in.addEventListener('click', async ()=> {
     }
 
 })
-
-
-

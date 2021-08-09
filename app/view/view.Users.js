@@ -48,7 +48,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.get('/user', middlewares.validateToken, async (req, res) => {
+	app.post('/user', middlewares.validateToken, async (req, res) => {
 		try {
 			let user = await controlersUsers.retrieveUser(req.params.user);
 			res.status(200).json(user);

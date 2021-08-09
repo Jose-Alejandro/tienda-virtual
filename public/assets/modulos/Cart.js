@@ -1,3 +1,4 @@
+//valida token de session y trae datos de usuario
 
 /*
 class Cart(user) {
@@ -53,6 +54,7 @@ class Cart {
         this.productos = this.obtener();
         this.ML_ENDPOINT= 'product';
         this.total=0;
+        this.jsonProductsCheck=[];
         
     }
     agregar(producto) {
@@ -106,6 +108,32 @@ class Cart {
     }
     
 
+    async checkout(){
+        try {
+        if( this.total >0){
+        let data =  await JSON.parse(sessionStorage.getItem('dataSession'))
+        if (sessionStorage['dataSession']){
+        let resultado = await fetch('http://localhost:3000/user/orders', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + data.token,
+        },
+        body: JSON.stringify(this.jsonProductsCheck)
+        })
+        location.href="/congratulations.html"
+        Carrito.limpiar();
+    }else{
+        location.href="/login.html"}
+        }else{
+            alert("sin productos")
+        }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async mostrarProductos(){
 
         for (const i in  this.productos) {
@@ -114,6 +142,13 @@ class Cart {
                     const response = await fetch(`http://127.0.0.1:3000/${this.ML_ENDPOINT}?q=${this.productos[i]}`);
                     const item = await response.json(); //promesa en espera
                    // console.log(item);
+                    //create json product and add to jsonProductsCheck
+                    this.jsonProductsCheck.push( {
+                        "product_id" : item.id,
+                        "selling_price": item.price,
+                        "quantity" :"1"
+                    })       
+                    console.log(this.jsonProductsCheck)
                     this.total+= item.price;
                     this.createElementProduct(item);
                     }
@@ -133,6 +168,12 @@ class Cart {
                         const response = await fetch(`http://127.0.0.1:3000/product/${this.productos[i]}`,{method: 'get'});
                         const item = await response.json(); //promesa en espera 
                        this.createElementLocal(item[0]);
+                       this.jsonProductsCheck.push( {
+                        "product_id" : item[0].id_product,
+                        "selling_price": item[0].price,
+                        "quantity" : document.getElementById(`Q${item[0].id_product}`).value
+                    })
+                    console.log(this.jsonProductsCheck)
                       this.total+= item[0].price;
                     }
                 } catch (error) {
@@ -168,6 +209,17 @@ class Cart {
         button.textContent = 'Borrar';
         button.setAttribute("onclick",`eliminaProducto('${item.id}')`);
 
+        let quantity = document.createElement("input");
+        quantity.setAttribute("type", "number");
+        quantity.setAttribute("value", "1");
+        quantity.setAttribute("min", "1");
+        quantity.setAttribute("max", "5");
+        quantity.setAttribute("id",`Q${item.id}`)
+
+        let p = document.createElement("p");
+        p.textContent = 'Cantidad'
+
+        
 
         let itemImage = document.createElement("img");
         itemImage.setAttribute("src", item.thumbnail);
@@ -184,6 +236,9 @@ class Cart {
         div.appendChild(itemImage);
         li.appendChild(span);
         span.appendChild(button);
+        div.appendChild(p)
+        p.appendChild(quantity)
+        
     }
 
     
@@ -211,6 +266,18 @@ class Cart {
         button.textContent = 'Borrar';
         button.setAttribute("onclick",`eliminaProducto('${item.id_product}')`);
 
+        
+        let quantity = document.createElement("input");
+        quantity.setAttribute("type", "number");
+        quantity.setAttribute("value", "1");
+        quantity.setAttribute("min", "1");
+        quantity.setAttribute("max", "5");
+        quantity.setAttribute("id",`Q${item.id_product}`)
+
+        let p = document.createElement("p");
+        p.textContent = 'Cantidad'
+
+
 
         let itemImage = document.createElement("img");
         itemImage.setAttribute("src", item.image);
@@ -227,6 +294,8 @@ class Cart {
         div.appendChild(itemImage);
         li.appendChild(span);
         span.appendChild(button);
+        div.appendChild(p)
+        p.appendChild(quantity)
     }
 }
 
@@ -239,13 +308,11 @@ let contCar = document.getElementById("contCar");
 contCar.textContent = Carrito.obtenerConteo();
 
 
-if(document.getElementById('check')){
-    document.getElementById('check').addEventListener('click', async ()=>{
-    clearCar();
-})
-}
 //fucniones externas
 
+function checkout(){
+    Carrito.checkout();
+}
 
 
 function clickAdd(prod){
@@ -260,9 +327,17 @@ function eliminaProducto(prod){
 function cargarProductos(){
     Carrito.mostrarProductos(); 
     Carrito.mostrarProductosLocal();
+    console.log(this.jsonProductsCheck)
 }
 
 function clearCar(){
     Carrito.limpiar();
-    console.log('limpia')
 }
+function Sign_out(){
+	var opcion = confirm("Desea salir?");
+    if (opcion == true) {
+		sessionStorage.clear(); 
+		location.href = '/login.html'
+	}
+}
+

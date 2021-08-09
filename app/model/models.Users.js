@@ -22,10 +22,10 @@ module.exports.UserExists = async (user) => {
 		let exists = await users.findOne({
 			where: {
 				email: user.email,
-				userName: user.userName,
+				//userName: user.userName,
 				password: user.password,
 				active: 'true',
-				role: 'user'
+				role:  user.role
 			}
 
 		});
@@ -65,7 +65,7 @@ module.exports.retrieveUser = async (user) => {
 		let User = await users.findOne({
 			where: {
 				email: user.email,
-				userName: user.userName,
+				//userName: user.userName,
 				password: user.password,
 				active: 'true',
 				role: 'user'

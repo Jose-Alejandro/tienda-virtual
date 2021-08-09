@@ -25,7 +25,7 @@ const UserOrders = sequelize.define('user_orders',
 			type: DataTypes.STRING(50),
 			allowNull: false
 		},
-		userName: {
+		email: {
 			type: DataTypes.STRING(50),
 			allowNull: false
 		},

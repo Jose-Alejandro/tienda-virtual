@@ -10,7 +10,7 @@ module.exports = async (app) => {
 				const id = await controlerSells.createOrder();
 				const myOrder = {
 					order_id: id,
-					userName: req.params.user.userName,
+					email: req.params.user.email, //se cambio por email
 					products: req.body
 				};
 				const result = await controlerSells.createUserOrder(myOrder);
