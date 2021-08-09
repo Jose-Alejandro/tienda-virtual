@@ -3,7 +3,7 @@ const middlewares = require('../../middlewares/middlewares');
 
 module.exports = async (app) => {
 
-	app.post('/users/register', async (req, res) => {
+	app.post('/users/register', middlewares.validateRegisterInfo, async (req, res) => {
 		let newUser = req.body;
 		try {
 			const ok = await controlersUsers.registerUser(newUser);
@@ -18,7 +18,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/users/login', async (req, res) => {
+	app.post('/users/login',middlewares.validateLoginInfo, async (req, res) => {
 		let user = req.body;
 		try {
 			const ok = await controlersUsers.validateUser(user);
@@ -33,7 +33,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/admin/login', async (req, res) => {
+	app.post('/admin/login',middlewares.validateLoginInfo, async (req, res) => {
 		let user = req.body;
 		try { 
 			const ok = await controlersUsers.validateAdmin(user);
@@ -70,7 +70,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/user/update', middlewares.validateToken, async (req, res) => {
+	app.post('/user/update', middlewares.validateToken,middlewares.validateRegisterInfo ,async (req, res) => {
 		let modifiedUser = req.body;
 		try {
 			let result = await controlersUsers.modifyUser(modifiedUser);
