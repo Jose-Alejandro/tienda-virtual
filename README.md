@@ -4,20 +4,32 @@ Authors: Alejandro Esquivel / Guillermo Ortega
 # Usage
 * Clone Repo `git clone https://github.com/Jose-Alejandro/tienda-virtual.git`
 
-# Start Back Server
-* `cd Back` directory
+# Setup MS Sql server
+* setup username and password
+* create an empty database e.g.
+``` my_store ```
+* save these to a .env file, as next described
+
+# Set up your .env file with environmental variables
+*  setup ``` HOST ```, ```PORT```, ```DB_USER```, ```DB_PASS```, ``` DB_NAME ```, ``` DIALECT ```, ``` SECRET_KEY ```, ``` WHITE_LIST ``` environmental variables
+* example of .env file:
+
+```
+HOST= 'localhost'
+PORT = 8080
+
+DB_USER = 'user'
+DB_PASS = 'pass'
+DB_NAME = 'my_store'
+DIALECT = 'mssql'
+
+SECRET_KEY = 'MySecretKey.'
+
+WHITE_LIST = ['http://127.0.0.1:8080', 'http://127.0.0.1:3000']
+```
+
+# Start Back and front server
 * execute `npm install`
 * execute `npm run dev`
-
-# Start Front
-* `cd Front` directory
-* `open .` in VSCode
-* install Live-Server extension
-* right click in index.html
-* click in Open with Live Server
-
-
-# Notes
-* Make sure you start web server at http://127.0.0.1:5500 (default by Live-Server extension)
-* Back server uses CORS white-list based authorization, and http://127.0.0.1:5500 is authorized. Other front web servers will be rejected.
-
+* Go to a web browser and navigate to ```http://$HOST:$PORT```
+* Start having fun with virtual store
