@@ -6,23 +6,17 @@ console.log('Hola mundo desde el servidor pero lo enviamos al front')
 window.onload = async function (){
     let data =  await JSON.parse(sessionStorage.getItem('dataSession'))
 
-    if (sessionStorage['dataSession']){
+    if (sessionStorage['dataSession'] && data.role==="admin"){
     let res = await fetch('http://localhost:3000/userAdmin', {
         method: 'post',
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + data.token
-          },
-        body: JSON.stringify({
-            "email": data.email,
-            "password" : data.pass,
-            "role" : data.role
-        })
+          }
     })
          let result =  await res.json()
          document.getElementById('dataUser').textContent  = `Bienvenido ${result.role} ${result.names} id ${result.id}`
-    
     }else{
         
         location.href = '/loginAdmin.html'

@@ -8,17 +8,12 @@ window.onload = async function (){
     if (sessionStorage['dataSession']){
 		try {
     let res = await fetch('http://localhost:3000/user', {
-        method: 'post',
+        method: 'get',
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + data.token
-          },
-        body: JSON.stringify({
-            "email": data.email,
-            "password" : data.pass,
-            "role" : data.role
-        })
+          }
     })
          let result =  await res.json()
          document.getElementById('user').textContent  = `Bienvenido ${result.userName}`
