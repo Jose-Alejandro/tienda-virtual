@@ -32,9 +32,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./LocalProducts.html">Local Products</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./login.html" tabindex="-1">Login</a>
-                        </li>
                     </ul>
                     <!-- <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -45,49 +42,38 @@
         </nav>
     </header>
     <h1 class="text-center TrendProducts mt-4">Registro</h1>
-        <form class="row g-3 m-5">
+         <form id="formReg" class="row g-3 m-5" accept-charset="UTF-8" action = "http://localhost:3000/users/register" method="post"> 
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label" >Names</label>
+            <input type="text" name="names" class="form-control" >
+          </div> 
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label" >Last Names</label>
+            <input type="text" name="last_names" class="form-control" >
+          </div>
+          <div class="col-md-6">
+              <label for="inputEmail4" class="form-label" >Email</label>
+              <input type="email" name="email" class="form-control" >
+            </div>
             <div class="col-md-6">
-              <label for="inputEmail4" class="form-label" >Username (Email)</label>
-              <input type="email" class="form-control" id="inputEmail4">
+              <label for="inputEmail4" class="form-label" >User Name</label>
+              <input type="text" name="userName" class="form-control" >
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Phone number</label>
+              <input type="text" name="phone_number" class="form-control">
             </div>
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Password</label>
-              <input type="password" class="form-control" id="inputPassword4">
-            </div>
-            <div class="col-md-6">
-              <label for="inputEmail4" class="form-label" >Name</label>
-              <input type="text" class="form-control" id="inputName">
-            </div>
-            <div class="col-md-6">
-              <label for="inputEmail4" class="form-label" >Last Name</label>
-              <input type="text" class="form-control" id="inputLastName">
+              <input type="password" name="password" class="form-control">
             </div>
             <div class="col-12">
-              <label for="inputAddress" class="form-label">Main Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+              <label for="inputAddress" class="form-label">Billing_address</label>
+              <input type="text" name="billing_address" class="form-control" placeholder="1234 Main St">
             </div>
             <div class="col-12">
-              <label for="inputAddress2" class="form-label">Delivery Address</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="col-md-6">
-              <label for="inputCity" class="form-label">Country</label>
-              <input type="text" class="form-control" id="inputCountry">
-            </div>
-            <div class="col-md-6">
-              <label for="inputCity" class="form-label">City</label>
-              <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="col-md-4">
-              <label for="inputState" class="form-label">State</label>
-              <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="col-md-2">
-              <label for="inputZip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="inputZip">
+              <label for="inputAddress2" class="form-label">Delivery_address</label>
+              <input type="text" name="delivery_address" class="form-control" placeholder="Apartment, studio, or floor">
             </div>
             <!-- <div class="col-12">
               <div class="form-check">
@@ -98,7 +84,7 @@
               </div>
             </div> -->
             <div class="col-12">
-                <a class="btn btn-primary" href="./index.html">Sign in</a>
+                <input class="btn btn-primary" style="width:150px" type = "submit"value = "Crear">
                 <!-- <button type="submit" class="btn btn-primary">Sign in</button> -->
             </div>
           </form>
@@ -106,14 +92,13 @@
 
         <!-- FOOTER -->
         <footer class="container">
-            <p class="float-end"><a href="#">Back to top</a></p>
             <p>&copy; 2021–2021 Super Store, Inc.
                 <!-- <a href="#">&middot; Privacy</a> &middot; <a href="#">Terms</a> -->
             </p>
         </footer>
 
 
-    <script src="./assets/index.js"></script>
+    <script src=".//assets/modulos/index.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

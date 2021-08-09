@@ -3,12 +3,13 @@ const middlewares = require('../../middlewares/middlewares');
 
 module.exports = async (app) => {
 
-	app.post('/users/register', middlewares.validateRegisterInfo, async (req, res) => {
+	app.post('/users/register', async (req, res) => {
 		let newUser = req.body;
 		try {
 			const ok = await controlersUsers.registerUser(newUser);
 			if (ok) {
-				res.status(200).json(newUser);
+				//res.status(200).json(newUser);
+				res.redirect('/login.html');
 			} else
 				throw new Error('Internal error with the server, try again later');
 		} catch (error) {
@@ -17,7 +18,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/users/login', middlewares.validateLoginInfo, async (req, res) => {
+	app.post('/users/login', async (req, res) => {
 		let user = req.body;
 		try {
 			const ok = await controlersUsers.validateUser(user);
@@ -32,11 +33,11 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/admin/login', middlewares.validateLoginInfo, async (req, res) => {
+	app.post('/admin/login', async (req, res) => {
 		let user = req.body;
-		try {
+		try { 
 			const ok = await controlersUsers.validateAdmin(user);
-
+			
 			if (ok) {
 				let sessionToken = await controlersUsers.generateUserToken(user);
 				res.json(sessionToken);
@@ -48,7 +49,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.get('/user', middlewares.validateToken, async (req, res) => {
+	app.post('/user', middlewares.validateToken, async (req, res) => {// pasa lo mismo como el get, lo cambie a post y el update a /user/update
 		try {
 			let user = await controlersUsers.retrieveUser(req.params.user);
 			res.status(200).json(user);
@@ -59,7 +60,7 @@ module.exports = async (app) => {
 	});
 
 	app.post('/userAdmin', middlewares.validateToken, async (req, res) => {
-
+		
 		try {
 			let user = await controlersUsers.retrieveUserAdmin(req.params.user);
 			res.status(200).json(user);
@@ -69,7 +70,7 @@ module.exports = async (app) => {
 		}
 	});
 
-	app.post('/user', middlewares.validateToken, middlewares.validateRegisterInfo, async (req, res) => {
+	app.post('/user/update', middlewares.validateToken, async (req, res) => {
 		let modifiedUser = req.body;
 		try {
 			let result = await controlersUsers.modifyUser(modifiedUser);

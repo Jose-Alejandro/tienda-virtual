@@ -2,7 +2,7 @@
 	"name": "back",
 	"version": "1.0.0",
 	"description": "Back end Tienda virtual Tecla Academy",
-	"main": "server.js",
+	"main": "app.js",
 	"scripts": {
 		"test": "NODE_ENV=test ./node_modules/.bin/mocha -r dotenv/config --reporter spec",
 		"start": "node app.js",
