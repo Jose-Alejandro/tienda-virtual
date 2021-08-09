@@ -13,7 +13,6 @@ const viewProducts = require('./app/view/view.products');
 const products = require('./db/db.modelo.products');
 const order = require('./db/db.model.order');
 const sells = require('./app/view/vew.sells');
-
 // Antes de usar middlewarenpm install body-parser
 const bodyParser = require('body-parser');
 

@@ -127,7 +127,7 @@ module.exports.deleteUser = async (user) => {
 		let result = await users.update(user, {
 			where: {
 				email: user.email,
-				userName: user.userName,
+				// userName: user.userName,
 				password: user.password,
 				active: 'true',
 				role: 'user'
